@@ -3,10 +3,10 @@ import { Routes } from "@angular/router";
 export default [
   {
     path: 'sign-in',
-    loadComponent: () => import('./sign-in/sign-in.component'),
+    loadComponent: () => import('./auth-form/auth-form.component'),
   },
   {
     path: 'sign-up',
-    loadComponent: () => import('./sign-up/sign-up.component'),
+    loadComponent: () => import('./auth-form/auth-form.component'),
   }
 ] as Routes;
