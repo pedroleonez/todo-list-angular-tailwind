@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormFieldName, getErrorMessage } from '../../utils/validators';
+import { AuthService } from '../../data-access/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,45 +15,41 @@ import { FormFieldName, getErrorMessage } from '../../utils/validators';
   styleUrl: './sign-up.component.scss',
 })
 export default class SignUpComponent {
-  private readonly formBuilder = inject(NonNullableFormBuilder);
+  private readonly _formBuilder = inject(NonNullableFormBuilder);
+  private readonly _authService = inject(AuthService);
 
-  form: FormGroup<{
-    id: FormControl<number>;
-    name: FormControl<string>;
-    email: FormControl<string>;
-    password: FormControl<string>;
-  }>;
-
-  constructor() {
-    this.form = this.formBuilder.group({
-      id: null as unknown as number,
-      name: ['', [Validators.required, Validators.maxLength(100)]],
-      email: [
-        '',
-        [Validators.required, Validators.email, Validators.maxLength(100)],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(100),
-        ],
-      ],
-    });
-  }
+  form = this._formBuilder.group({
+    email: this._formBuilder.control('', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(100),
+    ]),
+    password: this._formBuilder.control('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(100),
+    ]),
+  });
 
   errorMessage(fieldName: FormFieldName): string | null {
     return getErrorMessage(fieldName, this.form);
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.form.invalid) return;
 
     const { email, password } = this.form.value;
 
-    if (!email || !password) return;
+    try {
+      if (!email || !password) return;
 
     console.log({ email, password });
+
+    await this._authService.signUp({ email, password }).then(() => {
+      console.log('User signed up successfully!');
+    });
+    } catch (error) {
+
+    }
   }
 }
