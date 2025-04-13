@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormFieldName, getErrorMessage } from '../../utils/validators';
 import { AuthService } from '../../data-access/auth.service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-sign-up',
@@ -37,19 +38,14 @@ export default class SignUpComponent {
 
   async onSubmit() {
     if (this.form.invalid) return;
-
     const { email, password } = this.form.value;
-
     try {
       if (!email || !password) return;
-
-    console.log({ email, password });
-
-    await this._authService.signUp({ email, password }).then(() => {
-      console.log('User signed up successfully!');
-    });
+      console.log({ email, password });
+      await this._authService.signUp({ email, password });
+      toast.success('Usuário cadastrado com sucesso!');
     } catch (error) {
-
+      toast.error('Erro ao cadastrar usuário!');
     }
   }
 }
