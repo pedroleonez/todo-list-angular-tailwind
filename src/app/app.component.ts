@@ -6,7 +6,7 @@ import { NgxSonnerToaster } from 'ngx-sonner';
   selector: 'app-root',
   imports: [RouterOutlet, NgxSonnerToaster],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'todo-list';
