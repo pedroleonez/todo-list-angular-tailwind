@@ -5,13 +5,13 @@ export const routes: Routes = [
   {
     canActivateChild: [publicGuard()],
     path: 'auth',
-    loadChildren: () => import('./auth/features/auth.routes'),
+    loadChildren: () => import('./auth/features/auth.routes').then(m => m.default),
   },
   {
     canActivateChild: [privateGuard()],
     path: 'tasks',
-    loadComponent: () => import('./shared/ui/layout/layout.component').then(m => m.LayoutComponent),
-    loadChildren: () => import('./task/features/tasks.routes'),
+    loadComponent: () => import('./shared/ui/layout/layout.component').then(m => m.default),
+    loadChildren: () => import('./task/features/tasks.routes').then(m => m.default),
   },
   {
     path: '**',
