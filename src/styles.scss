@@ -1,1 +1,10 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+body, html {
+  @apply bg-gray-900;
+}
+
+:root  {
+  color-scheme: dark light;
+}
