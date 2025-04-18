@@ -6,7 +6,7 @@
     @if(taskService.loading()) {
     <p class="mt-8 font-medium">Carregando...</p>
     } @else {
-    <app-table [tasks]="taskService.getTasks()" />
+    <app-table [tasks]="taskService.getTasks()" (onDelete)="deleteTask($event)" />
     }
   </div>
 </div>
