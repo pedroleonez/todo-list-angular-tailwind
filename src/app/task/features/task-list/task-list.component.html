@@ -1,8 +1,12 @@
-<div class="flex justify-center items-center pt-16">
+<div class="flex justify-center items-center pt-16 pb-16">
   <div class="flex flex-col gap-3">
     <div class="flex justify-end">
       <button routerLink="/tasks/new" class="btn">Nova tarefa</button>
     </div>
-    <app-table />
+    @if(taskService.loading()) {
+    <p class="mt-8 font-medium">Carregando...</p>
+    } @else {
+    <app-table [tasks]="taskService.getTasks()" />
+    }
   </div>
 </div>
