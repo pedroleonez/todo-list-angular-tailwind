@@ -1,4 +1,4 @@
-import { Component, effect, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Task } from '../../../task/data-access/task.service';
 import { RouterLink } from '@angular/router';
 
@@ -10,5 +10,12 @@ import { RouterLink } from '@angular/router';
 })
 export class TableComponent {
   tasks = input.required<Task[]>();
+  onDelete = output<string>();
+
+  deleteTask(id: string) {
+    if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+      this.onDelete.emit(id);
+    }
+  }
 
 }
